@@ -2,6 +2,9 @@ server:
   port: ${APPLICATION_PORT:5000}
   servlet:
     contextPath: /api
+  auth:
+    username: ${API_USERNAME:admin}
+    password: ${API_PASSWORD:admin}
 
 spring:
   main:
