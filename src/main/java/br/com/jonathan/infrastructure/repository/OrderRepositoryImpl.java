@@ -51,4 +51,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     public void deleteAll() {
         repository.deleteAll();
     }
+
+    @Override
+    public boolean existsByStoreId(String id) {
+        return repository.existsByStoreId(UUID.fromString(id));
+    }
 }

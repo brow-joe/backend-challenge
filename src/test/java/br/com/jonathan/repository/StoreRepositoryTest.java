@@ -1,6 +1,7 @@
 package br.com.jonathan.repository;
 
 import br.com.jonathan.domain.entity.StoreEntity;
+import br.com.jonathan.domain.repository.OrderRepository;
 import br.com.jonathan.domain.repository.StoreRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.RandomStringUtils;
@@ -29,6 +30,8 @@ public class StoreRepositoryTest extends Assertions {
 
     @Inject
     private StoreRepository repository;
+    @Inject
+    private OrderRepository orderRepository;
 
     @Mock
     private Supplier<StoreEntity> builder;
@@ -103,6 +106,7 @@ public class StoreRepositoryTest extends Assertions {
 
         assertEquals(NAME_SIZEOF, updated.getName().length());
         assertNotEquals(ADDRESS_SIZEOF, updated.getAddress().length());
+        assertFalse(orderRepository.existsByStoreId(updated.getId().toString()));
         return updated;
     }
 
@@ -113,6 +117,7 @@ public class StoreRepositoryTest extends Assertions {
 
         assertEquals(NAME_SIZEOF, created.getName().length());
         assertEquals(ADDRESS_SIZEOF, created.getAddress().length());
+        assertFalse(orderRepository.existsByStoreId(created.getId().toString()));
         return created;
     }
 

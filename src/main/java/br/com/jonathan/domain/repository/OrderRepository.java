@@ -19,4 +19,6 @@ public interface OrderRepository {
 
     public void deleteAll();
 
+    public boolean existsByStoreId(String id);
+
 }
