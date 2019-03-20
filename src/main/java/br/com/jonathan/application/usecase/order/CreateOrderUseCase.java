@@ -11,6 +11,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.function.Supplier;
 
 @Component
@@ -21,6 +22,7 @@ public class CreateOrderUseCase {
     private OrderRepository repository;
 
     @HystrixCommand
+    @Transactional(rollbackOn = Throwable.class)
     public ResourceDataSupport<OrderEntity> execute(OrderDTO dto, Supplier<Link> supplier) {
         logger.info("Create order={}!", dto);
         return ResourceDataSupport.of(

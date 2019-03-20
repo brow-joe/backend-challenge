@@ -10,6 +10,7 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.function.Supplier;
 
 @Component
@@ -20,6 +21,7 @@ public class RemoveStoreUseCase {
     private StoreRepository repository;
 
     @HystrixCommand
+    @Transactional(rollbackOn = Throwable.class)
     public ResourceSupport execute(String id, Supplier<Link> supplier) throws EntityNotFoundException {
         logger.info("Remove store by id={}!", id);
         ResourceSupport resource = new ResourceSupport();

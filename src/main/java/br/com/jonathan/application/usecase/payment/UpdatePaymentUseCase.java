@@ -11,6 +11,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.function.Supplier;
 
 @Component
@@ -21,6 +22,7 @@ public class UpdatePaymentUseCase {
     private PaymentRepository repository;
 
     @HystrixCommand
+    @Transactional(rollbackOn = Throwable.class)
     public ResourceDataSupport<PaymentEntity> execute(String id, PaymentDTO dto, Supplier<Link> supplier) {
         logger.info("Update payment={}, id={}!", dto, id);
         return ResourceDataSupport.of(

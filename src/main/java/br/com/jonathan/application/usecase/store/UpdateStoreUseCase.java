@@ -11,6 +11,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.function.Supplier;
 
 @Component
@@ -21,6 +22,7 @@ public class UpdateStoreUseCase {
     private StoreRepository repository;
 
     @HystrixCommand
+    @Transactional(rollbackOn = Throwable.class)
     public ResourceDataSupport<StoreEntity> execute(String id, StoreDTO dto, Supplier<Link> supplier) {
         logger.info("Update store={}, id={}!", dto, id);
         return ResourceDataSupport.of(
