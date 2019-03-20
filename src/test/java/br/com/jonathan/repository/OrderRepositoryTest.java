@@ -148,6 +148,8 @@ public class OrderRepositoryTest extends Assertions {
         assertTrue(CollectionUtils.isEmpty(created.getItems()));
         assertTrue(orderRepository.existsByStoreId(created.getStore().getId().toString()));
         assertFalse(paymentRepository.existsByOrderId(created.getId().toString()));
+        assertTrue(orderRepository.existsById(created.getId().toString()));
+        assertFalse(orderRepository.existsById(UUID.randomUUID().toString()));
         return created;
     }
 

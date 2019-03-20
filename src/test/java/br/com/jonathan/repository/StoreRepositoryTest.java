@@ -118,6 +118,8 @@ public class StoreRepositoryTest extends Assertions {
         assertEquals(NAME_SIZEOF, created.getName().length());
         assertEquals(ADDRESS_SIZEOF, created.getAddress().length());
         assertFalse(orderRepository.existsByStoreId(created.getId().toString()));
+        assertTrue(repository.existsById(created.getId().toString()));
+        assertFalse(repository.existsById(UUID.randomUUID().toString()));
         return created;
     }
 

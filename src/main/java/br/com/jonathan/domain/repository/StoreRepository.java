@@ -19,4 +19,6 @@ public interface StoreRepository {
 
     public void deleteAll();
 
+    public boolean existsById(String id);
+
 }

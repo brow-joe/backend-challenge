@@ -52,4 +52,9 @@ public class StoreRepositoryImpl implements StoreRepository {
         repository.deleteAll();
     }
 
+    @Override
+    public boolean existsById(String id) {
+        return repository.existsById(UUID.fromString(id));
+    }
+
 }

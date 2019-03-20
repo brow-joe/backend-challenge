@@ -21,4 +21,6 @@ public interface OrderRepository {
 
     public boolean existsByStoreId(String id);
 
+    public boolean existsById(String id);
+
 }

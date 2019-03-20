@@ -56,4 +56,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     public boolean existsByStoreId(String id) {
         return repository.existsByStoreId(UUID.fromString(id));
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return repository.existsById(UUID.fromString(id));
+    }
 }
