@@ -5,6 +5,7 @@ import br.com.jonathan.domain.entity.OrderItemEntity;
 import br.com.jonathan.domain.entity.StoreEntity;
 import br.com.jonathan.domain.enumeration.OrderTypeEnum;
 import br.com.jonathan.domain.repository.OrderRepository;
+import br.com.jonathan.domain.repository.PaymentRepository;
 import br.com.jonathan.domain.repository.StoreRepository;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
@@ -38,6 +39,8 @@ public class OrderRepositoryTest extends Assertions {
     private StoreRepository storeRepository;
     @Inject
     private OrderRepository orderRepository;
+    @Inject
+    private PaymentRepository paymentRepository;
 
     @Mock
     private Supplier<OrderEntity> builder;
@@ -129,6 +132,7 @@ public class OrderRepositoryTest extends Assertions {
         assertEquals(DATE, updated.getConfirmation());
         assertEquals(STATUS, updated.getStatus());
         assertTrue(CollectionUtils.isNotEmpty(updated.getItems()));
+        assertFalse(paymentRepository.existsByOrderId(updated.getId().toString()));
         return updated;
     }
 
@@ -141,6 +145,7 @@ public class OrderRepositoryTest extends Assertions {
         assertEquals(DATE, created.getConfirmation());
         assertEquals(STATUS, created.getStatus());
         assertTrue(CollectionUtils.isEmpty(created.getItems()));
+        assertFalse(paymentRepository.existsByOrderId(created.getId().toString()));
         return created;
     }
 
