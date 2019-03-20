@@ -128,6 +128,7 @@ public class PaymentRepositoryTest extends Assertions {
         assertNotEquals(CREDIT_CARD, updated.getCreditCard());
         assertEquals(DATE, updated.getPayment());
         assertEquals(STATUS, updated.getStatus());
+        assertTrue(paymentRepository.existsByOrderId(updated.getOrder().getId().toString()));
         return updated;
     }
 
@@ -139,6 +140,7 @@ public class PaymentRepositoryTest extends Assertions {
         assertEquals(CREDIT_CARD, created.getCreditCard());
         assertEquals(DATE, created.getPayment());
         assertEquals(STATUS, created.getStatus());
+        assertTrue(paymentRepository.existsByOrderId(created.getOrder().getId().toString()));
         return created;
     }
 

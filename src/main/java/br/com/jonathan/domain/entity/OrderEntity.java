@@ -35,7 +35,7 @@ public class OrderEntity extends AbstractedEntity {
     @JoinColumn(name = "store_id")
     private StoreEntity store;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<OrderItemEntity> items = new HashSet<>();
 
     public String getAddress() {

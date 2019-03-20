@@ -132,6 +132,7 @@ public class OrderRepositoryTest extends Assertions {
         assertEquals(DATE, updated.getConfirmation());
         assertEquals(STATUS, updated.getStatus());
         assertTrue(CollectionUtils.isNotEmpty(updated.getItems()));
+        assertTrue(orderRepository.existsByStoreId(updated.getStore().getId().toString()));
         assertFalse(paymentRepository.existsByOrderId(updated.getId().toString()));
         return updated;
     }
@@ -145,6 +146,7 @@ public class OrderRepositoryTest extends Assertions {
         assertEquals(DATE, created.getConfirmation());
         assertEquals(STATUS, created.getStatus());
         assertTrue(CollectionUtils.isEmpty(created.getItems()));
+        assertTrue(orderRepository.existsByStoreId(created.getStore().getId().toString()));
         assertFalse(paymentRepository.existsByOrderId(created.getId().toString()));
         return created;
     }
