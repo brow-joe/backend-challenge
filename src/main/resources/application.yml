@@ -23,6 +23,13 @@ spring:
   profiles:
     active: local
 
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.string}
