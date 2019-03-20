@@ -19,4 +19,6 @@ public interface PaymentRepository {
 
     public void deleteAll();
 
+    public boolean existsByOrderId(String id);
+
 }

@@ -51,4 +51,9 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     public void deleteAll() {
         repository.deleteAll();
     }
+
+    @Override
+    public boolean existsByOrderId(String id) {
+        return repository.existsByOrderId(UUID.fromString(id));
+    }
 }

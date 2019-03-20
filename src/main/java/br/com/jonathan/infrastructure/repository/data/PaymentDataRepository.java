@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface PaymentDataRepository extends JpaRepository<PaymentEntity, UUID> {
+
+    public boolean existsByOrderId(UUID id);
+
 }
