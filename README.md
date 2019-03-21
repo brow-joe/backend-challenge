@@ -5,6 +5,10 @@
 
 [Open local](http://localhost:5000/api/swagger-ui.html)
 
+* Default credentials:
+username: admin password: admin
+
+
 ### Installation
 
 ```sh
