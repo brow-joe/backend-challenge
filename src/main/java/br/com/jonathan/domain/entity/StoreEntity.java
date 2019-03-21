@@ -1,9 +1,11 @@
 package br.com.jonathan.domain.entity;
 
 import br.com.jonathan.application.dto.StoreDTO;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity(name = "store")
@@ -17,10 +19,12 @@ public class StoreEntity extends AbstractedEntity {
         super(id);
     }
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "address")
+    @NotNull
+    @Column(name = "address", nullable = false)
     private String address;
 
     public String getName() {
@@ -39,6 +43,10 @@ public class StoreEntity extends AbstractedEntity {
     public StoreEntity setAddress(String address) {
         this.address = address;
         return this;
+    }
+
+    public boolean isValid() {
+        return StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(address);
     }
 
     @Override

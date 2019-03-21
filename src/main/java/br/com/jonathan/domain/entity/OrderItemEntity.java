@@ -1,9 +1,12 @@
 package br.com.jonathan.domain.entity;
 
 import br.com.jonathan.application.dto.OrderItemDTO;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity(name = "order_item")
@@ -17,13 +20,16 @@ public class OrderItemEntity extends AbstractedEntity {
         super(id);
     }
 
-    @Column(name = "description")
+    @NotNull
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "unit_price")
+    @NotNull
+    @Column(name = "unit_price", nullable = false)
     private Double price;
 
-    @Column(name = "quantity")
+    @NotNull
+    @Column(name = "quantity", nullable = false)
     private Long quantity;
 
     public String getDescription() {
@@ -51,6 +57,12 @@ public class OrderItemEntity extends AbstractedEntity {
     public OrderItemEntity setQuantity(Long quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    public boolean isValid() {
+        return StringUtils.isNotEmpty(description) &&
+                Objects.nonNull(price) &&
+                Objects.nonNull(quantity);
     }
 
     @Override

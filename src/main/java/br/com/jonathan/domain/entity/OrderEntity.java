@@ -2,12 +2,13 @@ package br.com.jonathan.domain.entity;
 
 import br.com.jonathan.application.dto.OrderDTO;
 import br.com.jonathan.domain.enumeration.OrderTypeEnum;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @Entity(name = "store_order")
 public class OrderEntity extends AbstractedEntity {
@@ -20,22 +21,25 @@ public class OrderEntity extends AbstractedEntity {
         super(id);
     }
 
-    @Column(name = "address")
+    @NotNull
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "confirmation")
+    @NotNull
+    @Column(name = "confirmation", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date confirmation;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private OrderTypeEnum status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private StoreEntity store;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<OrderItemEntity> items = new HashSet<>();
 
     public String getAddress() {
@@ -81,6 +85,43 @@ public class OrderEntity extends AbstractedEntity {
     public OrderEntity setItems(Set<OrderItemEntity> items) {
         this.items = items;
         return this;
+    }
+
+    public boolean isValid() {
+        boolean isValid = StringUtils.isNotEmpty(address) && Objects.nonNull(status);
+        if (isValid && CollectionUtils.isNotEmpty(items)) {
+            for (OrderItemEntity item : items) {
+                if (!item.isValid()) {
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+        return isValid;
+    }
+
+    public boolean hasCompleted(Date date) {
+        if (Objects.nonNull(confirmation)) {
+            DateTime limit = new DateTime(confirmation).plusDays(10);
+            DateTime current = new DateTime(date).plus(1);
+            return current.isAfter(limit);
+
+        }
+        return false;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (Objects.isNull(confirmation)) {
+            confirmation = new Date();
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        if (Objects.isNull(confirmation)) {
+            confirmation = new Date();
+        }
     }
 
     @Override

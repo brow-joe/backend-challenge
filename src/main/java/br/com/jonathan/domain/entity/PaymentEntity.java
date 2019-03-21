@@ -2,9 +2,12 @@ package br.com.jonathan.domain.entity;
 
 import br.com.jonathan.application.dto.PaymentDTO;
 import br.com.jonathan.domain.enumeration.PaymentTypeEnum;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity(name = "order_payment")
@@ -18,11 +21,13 @@ public class PaymentEntity extends AbstractedEntity {
         super(id);
     }
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private PaymentTypeEnum status;
 
-    @Column(name = "credit_card")
+    @NotNull
+    @Column(name = "credit_card", nullable = false)
     private String creditCard;
 
     @Column(name = "payment_date")
@@ -67,6 +72,18 @@ public class PaymentEntity extends AbstractedEntity {
     public PaymentEntity setOrder(OrderEntity order) {
         this.order = order;
         return this;
+    }
+
+    public boolean isValid() {
+        return Objects.nonNull(status) && StringUtils.isNotEmpty(creditCard);
+    }
+
+    public boolean hasCompleted(Date date) {
+        OrderEntity order = getOrder();
+        if (Objects.nonNull(order)) {
+            return order.hasCompleted(date);
+        }
+        return false;
     }
 
     @Override
