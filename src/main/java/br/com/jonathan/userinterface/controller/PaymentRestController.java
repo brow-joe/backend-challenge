@@ -1,6 +1,9 @@
 package br.com.jonathan.userinterface.controller;
 
 import br.com.jonathan.application.dto.PaymentDTO;
+import br.com.jonathan.application.dto.RefundPaymentDTO;
+import br.com.jonathan.application.dto.RequestRefundDTO;
+import br.com.jonathan.application.resource.ResourceDTOSupport;
 import br.com.jonathan.application.resource.ResourceDataSupport;
 import br.com.jonathan.application.resource.ResourceListSupport;
 import br.com.jonathan.application.usecase.payment.*;
@@ -30,6 +33,8 @@ public class PaymentRestController extends AbstractedRestController<PaymentRestC
     private UpdatePaymentUseCase updatePaymentUseCase;
     @Inject
     private RemovePaymentUseCase removePaymentUseCase;
+    @Inject
+    private RefundPaymentUseCase refundPaymentUseCase;
 
     @Inject
     public PaymentRestController(@Value("${spring.application.version}") String version) {
@@ -78,4 +83,12 @@ public class PaymentRestController extends AbstractedRestController<PaymentRestC
             );
         }
     }
+
+    @PostMapping("/{id}/refund")
+    public ResponseEntity<ResourceDTOSupport<RefundPaymentDTO>> refund(@PathVariable("id") String id, @RequestBody RequestRefundDTO refund) {
+        ResourceDTOSupport<RefundPaymentDTO> resource = refundPaymentUseCase.execute(
+                id, refund, () -> withSelf(linked().refund(id, refund)));
+        return ResponseEntity.ok(resource);
+    }
+
 }
