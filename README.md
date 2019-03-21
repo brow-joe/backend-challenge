@@ -1,6 +1,10 @@
 # Backend-challenge
 
 
+[Open heroku](https://luccascosta.github.io/react-identity-component/)
+
+[Open local](http://localhost:5000/api/swagger-ui.html)
+
 ### Installation
 
 ```sh
