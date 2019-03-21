@@ -71,7 +71,7 @@ $ heroku open
 
 ### Security
 
-Spring security configured, all requests pass through the spring security interface, it is possible to change the access credentials through environment variables
+Spring security configured, all requests pass through the spring security interface, it is possible to change the access credentials through environment variables. The default credentials are username: admin password: admin
 
 | Environment variable |
 | ------ |
