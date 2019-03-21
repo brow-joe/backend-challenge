@@ -1,7 +1,7 @@
 # Backend-challenge
 
 
-[Open heroku](https://luccascosta.github.io/react-identity-component/)
+[Open heroku](https://backend-api-challenge.herokuapp.com/api/swagger-ui.html)
 
 [Open local](http://localhost:5000/api/swagger-ui.html)
 
