@@ -1,16 +1,16 @@
 # Backend-challenge
 
 
+[Open heroku](https://backend-api-challenge.herokuapp.com/api/swagger-ui.html)
+
+[Open local](http://localhost:5000/api/swagger-ui.html)
+
+
 ## Default credentials:
 
 * username: `admin` 
 
 * password: `admin`
-
-
-[Open heroku](https://backend-api-challenge.herokuapp.com/api/swagger-ui.html)
-
-[Open local](http://localhost:5000/api/swagger-ui.html)
 
 
 ### Installation
