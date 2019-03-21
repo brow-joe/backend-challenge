@@ -3,6 +3,7 @@ package br.com.jonathan.repository;
 import br.com.jonathan.domain.entity.OrderEntity;
 import br.com.jonathan.domain.entity.PaymentEntity;
 import br.com.jonathan.domain.entity.StoreEntity;
+import br.com.jonathan.domain.enumeration.OrderTypeEnum;
 import br.com.jonathan.domain.enumeration.PaymentTypeEnum;
 import br.com.jonathan.domain.repository.OrderRepository;
 import br.com.jonathan.domain.repository.PaymentRepository;
@@ -31,7 +32,7 @@ public class PaymentRepositoryTest extends Assertions {
     private static final Logger logger = LogManager.getLogger(PaymentRepositoryTest.class);
     private static final String CREDIT_CARD = UUID.randomUUID().toString();
     private static final Date DATE = new Date();
-    private static final PaymentTypeEnum STATUS = null;
+    private static final PaymentTypeEnum STATUS = PaymentTypeEnum.CREATED;
 
     @Inject
     private StoreRepository storeRepository;
@@ -55,7 +56,7 @@ public class PaymentRepositoryTest extends Assertions {
                 new OrderEntity()
                         .setAddress(RandomStringUtils.randomAlphabetic((int) (Math.random() * 60)))
                         .setConfirmation(new Date())
-                        .setStatus(null)
+                        .setStatus(OrderTypeEnum.CREATED)
                         .setStore(new StoreEntity(storeId))
         ).getId();
 
@@ -141,6 +142,8 @@ public class PaymentRepositoryTest extends Assertions {
         assertEquals(DATE, created.getPayment());
         assertEquals(STATUS, created.getStatus());
         assertTrue(paymentRepository.existsByOrderId(created.getOrder().getId().toString()));
+        assertTrue(paymentRepository.existsById(created.getId().toString()));
+        assertFalse(paymentRepository.existsById(UUID.randomUUID().toString()));
         return created;
     }
 

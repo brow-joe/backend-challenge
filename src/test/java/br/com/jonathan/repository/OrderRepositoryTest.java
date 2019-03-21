@@ -33,7 +33,7 @@ public class OrderRepositoryTest extends Assertions {
     private static final Logger logger = LogManager.getLogger(OrderRepositoryTest.class);
     private static final Integer ADDRESS_SIZEOF = 60;
     private static final Date DATE = new Date();
-    private static final OrderTypeEnum STATUS = null;
+    private static final OrderTypeEnum STATUS = OrderTypeEnum.CREATED;
 
     @Inject
     private StoreRepository storeRepository;
