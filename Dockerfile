@@ -1,13 +1,17 @@
 FROM maven:3.3-jdk-8 as builder
 
-ADD . /backend-challenge/
+EXPOSE  5000
 
-RUN cd /backend-challenge; mvn clean install
+COPY . /backend-challenge
+WORKDIR /backend-challenge
+
+RUN mvn clean install -f /backend-challenge && mkdir /backend-challenge/jar/
+RUN find /backend-challenge/ -iname '*.jar' -exec cp {} /backend-challenge/jar/ \;
 
 FROM java:8
 
-ADD . /
+WORKDIR /backend-challenge
 
-EXPOSE  5000
+COPY --from=builder /backend-challenge/jar/* /backend-challenge/
 
-ENTRYPOINT ["java" , "-Xmx1g", "-jar", "/target/backend-challenge-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "backend-challenge-1.0-SNAPSHOT.jar"]
