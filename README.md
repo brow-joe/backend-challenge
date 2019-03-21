@@ -30,6 +30,7 @@ $ java -jar /target/backend-challenge-1.0-SNAPSHOT.jar
 
 API preconfigured to work with parallel and asynchronous processing.
 All usecases are ready to work with the Hystrix circuit breaker, and you can configure the application to work in multiple instances.
+
 | Environment variable |
 | ------ |
 | DISCOVERY_ENABLED |
@@ -38,6 +39,7 @@ All usecases are ready to work with the Hystrix circuit breaker, and you can con
 ### Database
 
 Application module spring-boot-data-jpa
+
 | Environment variable |
 | ------ |
 | MYSQL_HOST |
