@@ -1,6 +1,7 @@
 package br.com.jonathan.domain.repository;
 
 import br.com.jonathan.domain.entity.PaymentEntity;
+import br.com.jonathan.domain.enumeration.PaymentTypeEnum;
 import br.com.jonathan.domain.repository.exception.EntityNotFoundException;
 
 import java.util.List;
@@ -20,5 +21,9 @@ public interface PaymentRepository {
     public void deleteAll();
 
     public boolean existsByOrderId(String id);
+
+    public boolean existsById(String id);
+
+    public List<PaymentEntity> findAllByStatus(PaymentTypeEnum status);
 
 }

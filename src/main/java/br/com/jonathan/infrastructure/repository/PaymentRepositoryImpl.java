@@ -1,6 +1,7 @@
 package br.com.jonathan.infrastructure.repository;
 
 import br.com.jonathan.domain.entity.PaymentEntity;
+import br.com.jonathan.domain.enumeration.PaymentTypeEnum;
 import br.com.jonathan.domain.repository.PaymentRepository;
 import br.com.jonathan.domain.repository.exception.EntityNotFoundException;
 import br.com.jonathan.infrastructure.repository.data.PaymentDataRepository;
@@ -55,5 +56,15 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     @Override
     public boolean existsByOrderId(String id) {
         return repository.existsByOrderId(UUID.fromString(id));
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        return repository.existsById(UUID.fromString(id));
+    }
+
+    @Override
+    public List<PaymentEntity> findAllByStatus(PaymentTypeEnum status) {
+        return repository.findAllByStatus(status);
     }
 }
