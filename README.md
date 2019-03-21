@@ -3,9 +3,9 @@
 
 * Default credentials:
 
-** username: admin 
+**username: admin 
 
-** password: admin
+**password: admin
 
 
 [Open heroku](https://backend-api-challenge.herokuapp.com/api/swagger-ui.html)
