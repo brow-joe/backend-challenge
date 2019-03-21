@@ -10,6 +10,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.function.Supplier;
 
 @Component
@@ -20,6 +21,7 @@ public class FindOneOrderUseCase {
     private OrderRepository repository;
 
     @HystrixCommand
+    @Transactional(rollbackOn = Throwable.class)
     public ResourceDataSupport<OrderEntity> execute(String id, Supplier<Link> supplier) {
         logger.info("Find order by id={}!", id);
         return ResourceDataSupport.of(

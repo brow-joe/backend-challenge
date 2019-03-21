@@ -2,7 +2,9 @@ package br.com.jonathan.application.usecase.payment;
 
 import br.com.jonathan.application.dto.PaymentDTO;
 import br.com.jonathan.application.pattern.specification.validation.ErrorsSpecificationPatternValidation;
+import br.com.jonathan.application.pattern.specification.validation.payment.OrderContainsPaymentSpecification;
 import br.com.jonathan.application.pattern.specification.validation.payment.PaymentContainsOrderSpecification;
+import br.com.jonathan.application.pattern.specification.validation.payment.PaymentIsValidFieldsSpecification;
 import br.com.jonathan.application.resource.ResourceDataSupport;
 import br.com.jonathan.domain.entity.PaymentEntity;
 import br.com.jonathan.domain.repository.PaymentRepository;
@@ -26,9 +28,17 @@ public class UpdatePaymentUseCase {
     private PaymentRepository repository;
 
     @Inject
-    public UpdatePaymentUseCase(PaymentContainsOrderSpecification paymentContainsOrderSpecification) {
+    public UpdatePaymentUseCase(
+            PaymentContainsOrderSpecification paymentContainsOrderSpecification,
+            OrderContainsPaymentSpecification orderContainsPaymentSpecification,
+            PaymentIsValidFieldsSpecification paymentIsValidFieldsSpecification
+    ) {
         super();
-        this.pattern = ErrorsSpecificationPatternValidation.of(paymentContainsOrderSpecification);
+        this.pattern = ErrorsSpecificationPatternValidation.of(
+                paymentContainsOrderSpecification,
+                orderContainsPaymentSpecification,
+                paymentIsValidFieldsSpecification
+        );
     }
 
     @HystrixCommand

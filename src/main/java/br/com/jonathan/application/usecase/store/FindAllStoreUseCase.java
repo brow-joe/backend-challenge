@@ -10,6 +10,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.function.Supplier;
 
 @Component
@@ -20,6 +21,7 @@ public class FindAllStoreUseCase {
     private StoreRepository repository;
 
     @HystrixCommand
+    @Transactional(rollbackOn = Throwable.class)
     public ResourceListSupport<StoreEntity> execute(Supplier<Link> supplier) {
         logger.info("Find all store!");
         return ResourceListSupport.of(
